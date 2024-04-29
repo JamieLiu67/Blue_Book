@@ -1,5 +1,7 @@
+import 'package:blue_book/components/post_card.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_book/components/my_drawer.dart';
+import 'package:blue_book/pages/shopping_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,16 +11,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentPageIndex = 0;
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  final List<Widget> _pages = [
+    GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, // 网格的列数为2
+        childAspectRatio: 0.6, //宽高比
+      ),
+      itemCount: 15,
+      itemBuilder: (context, index) {
+        return PostCard();
+      },
+    ),
+    ShoppingPage(),
+    Placeholder(),
+    Placeholder(),
+    Placeholder(),
+    Placeholder(),
+  ];
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -26,7 +42,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
-        title: const Text("发现"),
+        title: const Text(
+          "B l u e B o o k",
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           side: BorderSide(
@@ -45,69 +64,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const MyDrawer(),
-      body: [
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('主页'),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('购物'),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('发布'),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('发布'),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('消息'),
-            ),
-          ),
-        ),
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('我的'),
-            ),
-          ),
-        ),
-      ][currentPageIndex],
+      body: _pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
+        onDestinationSelected: _onItemTapped, // 使用 _onItemTapped 处理点击事件
+        selectedIndex: _selectedIndex,
         destinations: [
           const NavigationDestination(
             selectedIcon: Icon(Icons.home),
@@ -131,8 +91,8 @@ class _HomePageState extends State<HomePage> {
             selectedIcon: const Icon(Icons.message),
             icon: Badge(
               backgroundColor: Colors.lightBlue[600],
-              child: const Icon(Icons.message_outlined),
               smallSize: 7,
+              child: const Icon(Icons.message_outlined),
             ),
             label: '消息',
           ),

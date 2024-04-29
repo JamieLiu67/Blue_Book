@@ -3,6 +3,10 @@
 这是一个为了学习Flutter知识的练手项目（纯前端），主要抄袭了小红书的UI和设计，基本就是把小红书的皮当作目标了，然后自己一点点去写。
 
 ## Getting Started
+1. run 
+``` shell
+flutter pub get
+```
 
 This project is a starting point for a Flutter application.
 
