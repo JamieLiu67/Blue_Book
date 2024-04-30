@@ -1,4 +1,6 @@
 import 'package:blue_book/components/post_card.dart';
+import 'package:blue_book/pages/chat_page.dart';
+import 'package:blue_book/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_book/components/my_drawer.dart';
 import 'package:blue_book/pages/shopping_page.dart';
@@ -26,8 +28,8 @@ class _HomePageState extends State<HomePage> {
     ),
     ShoppingPage(),
     Placeholder(),
-    Placeholder(),
-    Placeholder(),
+    ChatPage(),
+    ProfilePage(),
     Placeholder(),
   ];
 
@@ -66,6 +68,7 @@ class _HomePageState extends State<HomePage> {
       drawer: const MyDrawer(),
       body: _pages[_selectedIndex],
       bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         onDestinationSelected: _onItemTapped, // 使用 _onItemTapped 处理点击事件
         selectedIndex: _selectedIndex,
         destinations: [
@@ -99,7 +102,7 @@ class _HomePageState extends State<HomePage> {
           const NavigationDestination(
             selectedIcon: Icon(Icons.person),
             icon: Icon(Icons.person_outline),
-            label: '我的',
+            label: '我',
           ),
         ],
       ),

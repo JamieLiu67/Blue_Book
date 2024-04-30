@@ -31,10 +31,8 @@ class PostCard extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 12, //半径
-                      child: Placeholder(
-                        fallbackWidth: 24,
-                        fallbackHeight: 24, // 可以根据需要调整高度
-                      ),
+                      backgroundImage: NetworkImage(
+                          'https://avatars.githubusercontent.com/u/1023456789?v=4'),
                     ),
                     Gap(5),
                     Text('用户名'),
